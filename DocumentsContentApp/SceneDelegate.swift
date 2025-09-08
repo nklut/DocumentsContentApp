@@ -1,10 +1,3 @@
-//
-//  SceneDelegate.swift
-//  DocumentsContentApp
-//
-//  Created by Nikita on 05.09.2025.
-//
-
 import UIKit
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
@@ -20,7 +13,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let scene = (scene as? UIWindowScene) else { return }
         let window = UIWindow(windowScene: scene)
         
-        window.rootViewController = ViewController()
+        // window.rootViewController = ViewController()
+        window.rootViewController = UINavigationController(rootViewController: ContentViewController())
         window.makeKeyAndVisible()
         self.window = window
         

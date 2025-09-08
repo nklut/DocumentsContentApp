@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXFileReference section */
-		11BCE78A2E6ABEC500C8BB42 /* DocumentsContentApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DocumentsContentApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		11BCE78A2E6ABEC500C8BB42 /* DocumentsContentApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = DocumentsContentApp.app; path = "/Users/nikita/Desktop/Dev/Netology/HW_iOSUI_IOSDT/DocumentsContentApp/build/Debug-iphoneos/DocumentsContentApp.app"; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -46,16 +46,7 @@
 			isa = PBXGroup;
 			children = (
 				11BCE78C2E6ABEC500C8BB42 /* DocumentsContentApp */,
-				11BCE78B2E6ABEC500C8BB42 /* Products */,
 			);
-			sourceTree = "<group>";
-		};
-		11BCE78B2E6ABEC500C8BB42 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				11BCE78A2E6ABEC500C8BB42 /* DocumentsContentApp.app */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -108,7 +99,7 @@
 			mainGroup = 11BCE7812E6ABEC500C8BB42;
 			minimizedProjectReferenceProxies = 1;
 			preferredProjectObjectVersion = 77;
-			productRefGroup = 11BCE78B2E6ABEC500C8BB42 /* Products */;
+			productRefGroup = 11BCE7812E6ABEC500C8BB42;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
