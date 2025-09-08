@@ -25,6 +25,7 @@ class ContentViewController: UIViewController {
         setupButtons()
         setupPicker()
         setupTable()
+        loadImages()
     }
     
     private func setupButtons() {
