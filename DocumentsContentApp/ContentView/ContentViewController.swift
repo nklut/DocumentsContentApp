@@ -99,11 +99,6 @@ class ContentViewController: UIViewController {
     
     @objc func didTapAddPicture(){
         DispatchQueue.main.async {
-            do {
-                let images = try FileManager.default.contentsOfDirectory(atPath: self.pictureSaver.docsDirPath.path)
-                print("Files in Documents dir are:\n\(images)")
-            } catch { print([])}
-            
             self.present(self.imagePicker, animated: true)
         }
     }
