@@ -2,7 +2,7 @@ import UIKit
 
 final class LoginViewController: UIViewController {
     
-    private let userStatus = UserStatus.shared
+    private let userSettings = UserSettings.shared
     private var userLoginStatus: UserLoginStatus = .passwordFirstAtempt
     private var buttonLabel: String = "Create Password" {
         didSet {
@@ -16,6 +16,16 @@ final class LoginViewController: UIViewController {
         view.translatesAutoresizingMaskIntoConstraints = false
         view.isSecureTextEntry = true
         view.placeholder = "Enter Password"
+        view.textAlignment = .center
+        view.clearButtonMode = .whileEditing
+        
+        view.layer.borderWidth = 2
+        view.layer.borderColor = UIColor.systemGray5.cgColor
+        
+        view.layer.masksToBounds = true
+        view.layer.cornerRadius = 10
+        
+        
         
         return view
     }()
@@ -23,7 +33,7 @@ final class LoginViewController: UIViewController {
     private lazy var loginButton: UIButton = {
         
         let view = UIButton(type: .roundedRect)
-        let currentStatus = userStatus.isPasswordExists()
+        let currentStatus = userSettings.isPasswordExists()
 
         if currentStatus {
             view.setTitle("Input Password", for: .normal)
@@ -36,12 +46,12 @@ final class LoginViewController: UIViewController {
         
         return view
     }()
-    private lazy var resetButton: UIButton = {
+    private lazy var resetUserButton: UIButton = {
         let view = UIButton(type: .roundedRect)
         
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.addTarget(self, action: #selector(didTapResetButton), for: .touchUpInside)
-        view.setTitle("Reset(Delete) password", for: .normal)
+        view.addTarget(self, action: #selector(didTapResetUserButton), for: .touchUpInside)
+        view.setTitle("Reset Password and Settings", for: .normal)
         
         return view
     }()
@@ -49,7 +59,8 @@ final class LoginViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
-       
+        self.tabBarController?.tabBar.isHidden = true
+        
         setupView()
     }
 
@@ -73,10 +84,10 @@ final class LoginViewController: UIViewController {
     
     private func checkStatus() -> Bool {
 
-        if userStatus.isPasswordExists(), userLoginStatus != .passwordSecondAtempt {
+        if userSettings.isPasswordExists(), userLoginStatus != .passwordSecondAtempt {
             // If password exists
             userLoginStatus = .passwordExists
-            if passwordField.text == userStatus.getUserPassword() {
+            if passwordField.text == userSettings.getUserPassword() {
                 // And password correct
                 return true
             } else {
@@ -89,7 +100,7 @@ final class LoginViewController: UIViewController {
                 // And its 1st attempt
                 if let pass = passwordField.text, pass.count > 4 {
                     print("Succesfull 1st attempt")
-                    userStatus.setUserPassword(as: pass)
+                    userSettings.setUserPassword(as: pass)
                     passwordField.text = ""
                     userLoginStatus = .passwordSecondAtempt
                     buttonLabel = "Repeat Password"
@@ -100,8 +111,12 @@ final class LoginViewController: UIViewController {
                 
             } else if userLoginStatus == .passwordSecondAtempt {
                 // And its 2nd attempt
-                if passwordField.text == userStatus.getUserPassword() {
+                if passwordField.text == userSettings.getUserPassword() {
                     // And password set correctly
+                    
+                    // Set default sorting
+                    UserDefaults.standard.set(true, forKey: "keyUserSort")
+                    
                     loginAlert("Password succesfully added. Welcome!")
                     buttonLabel = "Input Password"
                     userLoginStatus = .passwordExists
@@ -109,7 +124,7 @@ final class LoginViewController: UIViewController {
                 } else {
                     // And password set incorrectly
                     passwordAlert("Passwords mismatch. Please try again.")
-                    userStatus.resetUserPassword()
+                    userSettings.resetUserPassword()
                     userLoginStatus = .passwordFirstAtempt
                     buttonLabel = "Create Password"
                     passwordField.text = ""
@@ -122,7 +137,7 @@ final class LoginViewController: UIViewController {
     private func setupView() {
         view.addSubview(passwordField)
         view.addSubview(loginButton)
-        view.addSubview(resetButton)
+        view.addSubview(resetUserButton)
         
         let safeArea = view.safeAreaLayoutGuide
         NSLayoutConstraint.activate([
@@ -136,10 +151,10 @@ final class LoginViewController: UIViewController {
             loginButton.topAnchor.constraint(equalTo: passwordField.bottomAnchor, constant: 16),
             loginButton.heightAnchor.constraint(equalToConstant: 32),
             
-            resetButton.leadingAnchor.constraint(equalTo: passwordField.leadingAnchor),
-            resetButton.trailingAnchor.constraint(equalTo: passwordField.trailingAnchor),
-            resetButton.topAnchor.constraint(equalTo: loginButton.bottomAnchor, constant: 16),
-            resetButton.heightAnchor.constraint(equalToConstant: 32)
+            resetUserButton.leadingAnchor.constraint(equalTo: passwordField.leadingAnchor),
+            resetUserButton.trailingAnchor.constraint(equalTo: passwordField.trailingAnchor),
+            resetUserButton.topAnchor.constraint(equalTo: loginButton.bottomAnchor, constant: 16),
+            resetUserButton.heightAnchor.constraint(equalToConstant: 32)
         ])
     }
     
@@ -150,11 +165,14 @@ final class LoginViewController: UIViewController {
         }
     }
     
-    @objc func didTapResetButton() {
-        userStatus.resetUserPassword()
+    @objc func didTapResetUserButton() {
+        // Debug button
+        // Reset app settings to deafult
+        
+        UserDefaults.standard.set(true, forKey: "keyUserSort")
+        userSettings.resetUserPassword()
         userLoginStatus = .passwordFirstAtempt
         buttonLabel = "Create password"
-        print(userStatus.isPasswordExists())
     }
     
 }

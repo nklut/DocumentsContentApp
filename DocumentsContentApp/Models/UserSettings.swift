@@ -1,4 +1,5 @@
 import KeychainSwift
+import Foundation
 
 enum UserLoginStatus {
     case passwordExists
@@ -6,9 +7,20 @@ enum UserLoginStatus {
     case passwordSecondAtempt
 }
 
-final class UserStatus {
-    static let shared = UserStatus()
+final class UserSettings {
+    static let shared = UserSettings()
+    private let defaults = UserDefaults.standard
     
+    func getCurrentSort() -> Bool {
+        return defaults.bool(forKey: "keyUserSort")
+    }
+    
+    func reverseSort() {
+        var currentSort = getCurrentSort()
+        currentSort.toggle()
+        defaults.set(currentSort, forKey: "keyUserSort")
+    }
+
     func setUserPassword(as password: String) {
         KeychainSwift().set(password, forKey: "keyUserPassword")
     }
@@ -36,6 +48,4 @@ final class UserStatus {
             return false
         }
     }
-    
-    
 }

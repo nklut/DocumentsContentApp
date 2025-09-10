@@ -4,6 +4,7 @@ class ContentViewController: UIViewController {
     
     private let pictureSaver = PictureSaver.shared
     private let imagePicker = UIImagePickerController()
+    private let userSettings = UserSettings.shared
     
     private var savedImages: [SavedImage] = [] {
         didSet {
@@ -17,12 +18,23 @@ class ContentViewController: UIViewController {
         return view
     }()
     
+    override func viewWillAppear(_ animated: Bool) {
+        if userSettings.getCurrentSort() {
+            savedImages.sort { $0.imageName < $1.imageName }
+        } else {
+            //Debug feature
+            savedImages.shuffle()
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationItem.hidesBackButton = true
         view.backgroundColor = .systemBackground
         title = pictureSaver.docsDirPath.lastPathComponent
-    
+        
+        self.tabBarController?.tabBar.isHidden = false
+        self.navigationItem.setHidesBackButton(true, animated: false)
+
         setupButtons()
         setupPicker()
         setupTable()
