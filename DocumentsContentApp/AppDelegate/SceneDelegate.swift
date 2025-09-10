@@ -1,10 +1,3 @@
-//
-//  SceneDelegate.swift
-//  DocumentsContentApp
-//
-//  Created by Nikita on 05.09.2025.
-//
-
 import UIKit
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
@@ -20,7 +13,23 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let scene = (scene as? UIWindowScene) else { return }
         let window = UIWindow(windowScene: scene)
         
-        window.rootViewController = ViewController()
+        // Feed Nav Controller Setup
+        let settingsNavigationController = UINavigationController()
+        settingsNavigationController.tabBarItem.title = "Settings"
+        settingsNavigationController.tabBarItem.image = UIImage(systemName: "gear")
+        settingsNavigationController.viewControllers = [SettingsViewController()]
+        
+        // Profile Nav Controller Setup
+        let contentNavigationController = UINavigationController()
+        contentNavigationController.tabBarItem.title = "Files"
+        contentNavigationController.tabBarItem.image = UIImage(systemName: "photo")
+        contentNavigationController.viewControllers = [LoginViewController()]
+        
+        // Tab bar Controller Setup
+        let tabBarController = UITabBarController()
+        tabBarController.viewControllers = [contentNavigationController, settingsNavigationController]
+           
+        window.rootViewController = tabBarController
         window.makeKeyAndVisible()
         self.window = window
         

@@ -1,10 +1,3 @@
-//
-//  AppDelegate.swift
-//  DocumentsContentApp
-//
-//  Created by Nikita on 05.09.2025.
-//
-
 import UIKit
 
 @main
