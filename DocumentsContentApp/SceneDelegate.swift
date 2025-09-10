@@ -13,6 +13,16 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let scene = (scene as? UIWindowScene) else { return }
         let window = UIWindow(windowScene: scene)
         
+        let tabBarController = UITabBarController()
+        let tabBarContentController = ContentViewController()
+        let tabBarSettingsController = SettingsViewController()
+        
+        tabBarContentController.tabBarItem.image = UIImage(systemName: "photo.artframe")
+        tabBarSettingsController.tabBarItem.image = UIImage(systemName: "gear")
+        
+        tabBarController.viewControllers = [tabBarContentController, tabBarSettingsController]
+        
+        
         window.rootViewController = UINavigationController(rootViewController: LoginViewController())
         window.makeKeyAndVisible()
         self.window = window
